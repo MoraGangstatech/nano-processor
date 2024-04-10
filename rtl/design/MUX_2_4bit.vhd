@@ -1,0 +1,23 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY MUX_2_4bit IS
+   PORT (
+      A : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+      B : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+      S : IN STD_LOGIC;
+      Q : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
+END MUX_2_4bit;
+
+ARCHITECTURE Behavioral OF MUX_2_4bit IS
+
+BEGIN
+   PROCESS (S, A, B)
+   BEGIN
+      IF S = '0' THEN
+         Q <= B;
+      ELSE
+         Q <= A;
+      END IF;
+   END PROCESS;
+END Behavioral;
