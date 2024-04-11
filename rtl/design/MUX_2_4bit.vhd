@@ -1,3 +1,4 @@
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -10,10 +11,12 @@ end MUX_2_4bit;
 
 architecture Behavioral of MUX_2_4bit is
 
-component Tri_State
-    Port ( I : in STD_LOGIC;
-           O : out STD_LOGIC;
-           En : in STD_LOGIC);
+component Tri_State_4bit
+port (
+      En : in std_logic;
+      I : in STD_LOGIC_VECTOR (3 downto 0);
+      O : out STD_LOGIC_VECTOR (3 downto 0)
+      );
 end component;
 
 signal Not_S : STD_LOGIC;
@@ -22,60 +25,13 @@ begin
 
 Not_S <= not S;
 
-TS_0 : Tri_State
-port map( 
-    I => A(3),
-    O => Q(3),
-    En => S
-        );
-        
-TS_1 : Tri_State
-port map( 
-    I => A(2),
-    O => Q(2),
-    En => S
-        );
-        
-TS_2 : Tri_State
-port map( 
-    I => A(1),
-    O => Q(1),
-    En => S
-        );
-        
-TS_3 : Tri_State
-port map( 
-    I => A(0),
-    O => Q(0),
-    En => S
-        );
+Tri_State_Buffer_A: Tri_State_4bit 
+port map (En => S, 
+          I => A,
+          O => Q);
+Tri_State_Buffer_B: Tri_State_4bit 
+port map (En => Not_S, 
+          I => B, 
+          O => Q);
 
-TS_4 : Tri_State
-port map( 
-    I => B(3),
-    O => Q(3),
-    En => Not_S
-        );
-                
-TS_5 : Tri_State
-port map( 
-    I => B(2),
-    O => Q(2),
-    En => Not_S
-        );
-        
-TS_6 : Tri_State
-port map( 
-    I => B(1),
-    O => Q(1),
-    En => Not_S
-        );
-        
-TS_7 : Tri_State
-port map( 
-    I => B(0),
-    O => Q(0),
-    En => Not_S
-        );
-        
 end Behavioral;
