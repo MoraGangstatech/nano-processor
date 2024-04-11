@@ -32,7 +32,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 ENTITY Instruction_Decoder IS
     PORT (
         Instruction : IN STD_LOGIC_VECTOR (11 DOWNTO 0);
-        Jump_Reg : IN STD_LOGIC;
+        Jump_Reg : IN STD_LOGIC; -- zero
         Reg_En : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
         Reg_Sel_0 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
         Value : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -47,6 +47,7 @@ ARCHITECTURE Behavioral OF Instruction_Decoder IS
 
 BEGIN
 
+    --1 if jump
     Jump_Flag <= Instruction(11) AND Instruction(10) AND Jump_reg;
     Jump_Addr <= Instruction(2 DOWNTO 0);
 
@@ -57,6 +58,7 @@ BEGIN
 
     value <= Instruction(3 DOWNTO 0);
 
+    -- 1 when immediate value
     Load_Sel <= Instruction(11) AND (NOT Instruction(10));
 
     -- sub active only when NEG command actives
