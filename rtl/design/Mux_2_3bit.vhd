@@ -1,70 +1,37 @@
 
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY MUX_2_3bit IS
-    PORT (
-        A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-        B : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-        S : IN STD_LOGIC; -- 1 - A
-        Q : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
-END MUX_2_3bit;
+entity MUX_2_3bit is
+    Port ( A : in STD_LOGIC_VECTOR (2 downto 0);
+           B: in STD_LOGIC_VECTOR (2 downto 0);
+           S : in STD_LOGIC; -- 1 A
+           Q : out STD_LOGIC_VECTOR (2 downto 0));
+end MUX_2_3bit;
 
-ARCHITECTURE Behavioral OF MUX_2_3bit IS
+architecture Behavioral of MUX_2_3bit is
 
-    COMPONENT Tri_State
-        PORT (
-            I : IN STD_LOGIC;
-            O : OUT STD_LOGIC;
-            En : IN STD_LOGIC);
-    END COMPONENT;
+component Tri_State_3bit
+port (
+      En : in std_logic;
+      I : in STD_LOGIC_VECTOR (2 downto 0);
+      O : out STD_LOGIC_VECTOR (2 downto 0)
+      );
+end component;
 
-    SIGNAL Not_S : STD_LOGIC;
+signal Not_S : STD_LOGIC;
 
-BEGIN
+begin
 
-    Not_S <= NOT S;
+Not_S <= not S;
 
-    TS_0 : Tri_State
-    PORT MAP(
-        I => A(2),
-        O => Q(2),
-        En => S
-    );
+Tri_State_Buffer_A: Tri_State_3bit 
+port map (En => S, 
+          I => A,
+          O => Q);
+Tri_State_Buffer_B: Tri_State_3bit 
+port map (En => Not_S, 
+          I => B, 
+          O => Q);
 
-    TS_1 : Tri_State
-    PORT MAP(
-        I => A(1),
-        O => Q(1),
-        En => S
-    );
-
-    TS_2 : Tri_State
-    PORT MAP(
-        I => A(0),
-        O => Q(0),
-        En => S
-    );
-
-    TS_4 : Tri_State
-    PORT MAP(
-        I => B(2),
-        O => Q(2),
-        En => Not_S
-    );
-
-    TS_5 : Tri_State
-    PORT MAP(
-        I => B(1),
-        O => Q(1),
-        En => Not_S
-    );
-
-    TS_6 : Tri_State
-    PORT MAP(
-        I => B(0),
-        O => Q(0),
-        En => Not_S
-    );
-
-END Behavioral;
+end Behavioral;
