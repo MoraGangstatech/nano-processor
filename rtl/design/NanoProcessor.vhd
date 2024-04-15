@@ -35,7 +35,9 @@ ENTITY NanoProcessor IS
         Reset : IN STD_LOGIC;
         Zero : OUT STD_LOGIC;
         Overflow : OUT STD_LOGIC;
-        LD_Out : OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
+        Seven_Seg_Out : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
+        LED_Out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+        Anode: out STD_LOGIC_VECTOR(3 downto 0));
 END NanoProcessor;
 
 ARCHITECTURE Behavioral OF NanoProcessor IS
@@ -238,7 +240,7 @@ BEGIN
     LUT_7 : LUT_7_Segment
     PORT MAP(
         address => R7,
-        data => LD_Out);
+        data => Seven_Seg_Out);
 
     Program_C : PC
     PORT MAP(
@@ -248,5 +250,7 @@ BEGIN
         D => PC_Mux_Out);
 
     Zero <= Zero_Flag;
+    LED_Out <= R7;
+    Anode <= "1110";
 
 END Behavioral;
