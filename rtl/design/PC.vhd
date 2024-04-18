@@ -10,9 +10,12 @@ ENTITY PC IS
 END PC;
 
 ARCHITECTURE Behavioral OF PC IS
+
 BEGIN
+
   PROCESS (Clk)
   BEGIN
+
     IF (rising_edge(Clk)) THEN
       IF (Reset = '1') THEN
         Memory_select <= "000";
@@ -20,5 +23,7 @@ BEGIN
         Memory_select <= D;
       END IF;
     END IF;
+
   END PROCESS;
+
 END Behavioral;

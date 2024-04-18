@@ -1,46 +1,18 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 04/10/2024 04:54:55 PM
--- Design Name: 
--- Module Name: Tri_State - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
+ENTITY Tri_State IS
+    PORT (
+        I : IN STD_LOGIC;
+        O : OUT STD_LOGIC;
+        En : IN STD_LOGIC);
+END Tri_State;
 
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+ARCHITECTURE Behavioral OF Tri_State IS
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+BEGIN
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+    O <= (I) WHEN En = '1' ELSE
+        'Z';
 
-entity Tri_State is
-    Port ( I : in STD_LOGIC;
-           O : out STD_LOGIC;
-           En : in STD_LOGIC);
-end Tri_State;
-
-architecture Behavioral of Tri_State is
-
-begin
-
-O <= (I) when En = '1' else 'Z'; 
-
-end Behavioral;
+END Behavioral;

@@ -25,6 +25,7 @@ ARCHITECTURE Behavioral OF Mux_8_4bit IS
        END COMPONENT;
 
 BEGIN
+
        Mux_8_to_1_0 : Mux_8_to_1
        PORT MAP(
               D(0) => R0(0),

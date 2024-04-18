@@ -31,6 +31,7 @@ ARCHITECTURE Behavioral OF LUT_7_Segment IS
     );
 
 BEGIN
+
     data <= sevenSegment_ROM(to_integer(unsigned(address)));
 
 END Behavioral;

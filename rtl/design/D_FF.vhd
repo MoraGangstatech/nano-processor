@@ -14,7 +14,9 @@ ARCHITECTURE Behavioral OF D_FF IS
 
 BEGIN
 
-    PROCESS (Clk) BEGIN
+    PROCESS (Clk)
+    BEGIN
+
         IF (rising_edge(Clk)) THEN
             IF Res = '1' THEN
                 Q <= '0';
@@ -24,6 +26,7 @@ BEGIN
                 Qbar <= NOT D;
             END IF;
         END IF;
+
     END PROCESS;
 
 END Behavioral;

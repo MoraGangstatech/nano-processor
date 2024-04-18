@@ -1,58 +1,59 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-entity TB_Program_ROM is
+ENTITY TB_Program_ROM IS
 
-end TB_Program_ROM;
+END TB_Program_ROM;
 
-architecture Behavioral of TB_Program_ROM is
-    
-    component Program_ROM is
-        port (
-            MemoryAddress : in std_logic_vector(2 downto 0);
-            Instruction : out std_logic_vector(11 downto 0)
+ARCHITECTURE Behavioral OF TB_Program_ROM IS
+
+    COMPONENT Program_ROM IS
+        PORT (
+            MemoryAddress : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            Instruction : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
         );
-    end component;
+    END COMPONENT;
 
-    signal MemoryAddress : std_logic_vector(2 downto 0);
-    signal Instruction : std_logic_vector(11 downto 0);
+    SIGNAL MemoryAddress : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Instruction : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-begin
+BEGIN
 
     UUT : Program_ROM
-    port map (
+    PORT MAP(
         MemoryAddress => MemoryAddress,
         Instruction => Instruction
     );
 
-    process
-    begin
-    
-    MemoryAddress <= "000";
-    wait for 100 ns;
-    
-    MemoryAddress <= "001";
-    wait for 100 ns;
-        
-    MemoryAddress <= "010";
-    wait for 100 ns;
-            
-    MemoryAddress <= "011";
-    wait for 100 ns;
-                
-    MemoryAddress <= "100";
-    wait for 100 ns;
-    
-    MemoryAddress <= "101";
-    wait for 100 ns;
-    
-    MemoryAddress <= "110";
-    wait for 100 ns;
-        
-    MemoryAddress <= "111";
-    wait for 100 ns;
+    PROCESS
+    BEGIN
 
-    wait;
-    end process;
+        MemoryAddress <= "000";
+        WAIT FOR 100 ns;
 
-end Behavioral;
+        MemoryAddress <= "001";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "010";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "011";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "100";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "101";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "110";
+        WAIT FOR 100 ns;
+
+        MemoryAddress <= "111";
+        WAIT FOR 100 ns;
+
+        WAIT;
+
+    END PROCESS;
+
+END Behavioral;

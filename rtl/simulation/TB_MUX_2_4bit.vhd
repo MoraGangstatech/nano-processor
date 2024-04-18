@@ -24,31 +24,32 @@ ARCHITECTURE behavior OF TB_MUX_2_4bit IS
 BEGIN
 
     UUT : MUX_2_4bit
-    PORT MAP (
+    PORT MAP(
         A => A,
         B => B,
         S => S,
         Q => Q
     );
 
-PROCESS
+    PROCESS
     BEGIN
-    --Index 220627B -- 11 0101 1101 1101 0011
-    
+
+        --Index 220627B -- 11 0101 1101 1101 0011
+
         -- Test case 1: Select A
         S <= '0';
         A <= "0011";
         B <= "1101";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 2: Select B
         S <= '1';
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 3: Change inputs A and B
         A <= "0101";
         B <= "0001";
-        wait for 100 ns;
+        WAIT FOR 100 ns;
 
     END PROCESS;
 

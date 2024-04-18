@@ -1,57 +1,58 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-entity TB_Adder_3bit is
-end TB_Adder_3bit;
+ENTITY TB_Adder_3bit IS
+END TB_Adder_3bit;
 
-architecture Behavioral of TB_Adder_3bit is
+ARCHITECTURE Behavioral OF TB_Adder_3bit IS
 
-    component Adder_3bit is
-        port (
-            A : in STD_LOGIC_VECTOR (2 DOWNTO 0);
-            B : in STD_LOGIC;
-            S : out STD_LOGIC_VECTOR (2 DOWNTO 0)
+    COMPONENT Adder_3bit IS
+        PORT (
+            A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            B : IN STD_LOGIC;
+            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
         );
-    end component;
+    END COMPONENT;
 
-    signal A : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    signal B : STD_LOGIC;
-    signal S : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL A : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL B : STD_LOGIC;
+    SIGNAL S : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
-begin
+BEGIN
 
     UUT : Adder_3bit
-    port map (
+    PORT MAP(
         A => A,
         B => B,
         S => S
     );
 
+    PROCESS
+    BEGIN
 
-    process
-    begin
-    --Index 220578A -- 110 101 110 110 100 010
+        --Index 220578A -- 110 101 110 110 100 010
         -- Test case 1
         A <= "010"; -- 2
-        B <= '1';   -- 1
-        wait for 100 ns;
+        B <= '1'; -- 1
+        WAIT FOR 100 ns;
 
         -- Test case 2
         A <= "100"; -- 4
-        B <= '0';   -- 0
-        wait for 100 ns;
+        B <= '0'; -- 0
+        WAIT FOR 100 ns;
 
         -- Test case 3
         A <= "110"; -- 6
-        B <= '1';   -- 1
-        wait for 100 ns;
-        
+        B <= '1'; -- 1
+        WAIT FOR 100 ns;
+
         -- Test case 4
         A <= "101"; -- 5
-        B <= '1';   -- 1
-        wait for 100 ns;
-        
-        wait;
-    end process;
+        B <= '1'; -- 1
+        WAIT FOR 100 ns;
 
-end Behavioral;
+        WAIT;
+
+    END PROCESS;
+
+END Behavioral;
