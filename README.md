@@ -41,7 +41,7 @@ Clone this repository to your local machine using Git.
 
 ### Rebuild the Project
 
-After cloning the repository, navigate to the project directory in the command prompt and run `rebuild.bat`. It's essential to rebuild the project every time changes are pulled to ensure consistency.
+After cloning the repository, navigate to the project directory in the command prompt and run `rebuild.bat`. This will rebuild the Vivado project linking vhd(l), XDC files found according to the [Project Structure](#project-structure).
 
 ### Open the Project
 
@@ -61,13 +61,6 @@ To ensure a smooth collaboration process and maintain consistency across the pro
 
 - Place files outside the `np_project` directory into appropriate directories based on their purpose (e.g., constraint files in `cons/`, documents in `docs/`, etc.).
 - Utilize version control effectively to track changes and maintain project integrity.
-
-### Adding Files
-
-- When adding files to the project, ensure they are placed in the appropriate directories according to their purpose.
-- Use the "Write Tcl" feature in Vivado (File > Project > Write Tcl...) to regenerate the `rebuild.tcl` Tcl script to reflect adding files to the project. Make sure to uncheck `Copy sources to new project`.
-  
-  ![write tcl dialog](docs/images/write_tcl.png)
 
 ### Pull Requests
 
