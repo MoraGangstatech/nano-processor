@@ -1,6 +1,9 @@
 # [built project]
 /np_project/
 
+# [temporary files]
+/rebuild.tcl
+
 # [home]
 *.jou
 *.log
