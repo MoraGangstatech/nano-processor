@@ -17,65 +17,74 @@ END Mux_8_4bit;
 
 ARCHITECTURE Behavioral OF Mux_8_4bit IS
 
-       COMPONENT Mux_8_to_1
+       COMPONENT Decoder_3_to_8
               PORT (
-                     S : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-                     D : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-                     Y : OUT STD_LOGIC);
+                     I : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+                     Y : OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
        END COMPONENT;
+
+       COMPONENT Tri_State_4bit
+              PORT (
+                     I : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                     En : IN STD_LOGIC;
+                     O : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
+       END COMPONENT;
+
+       SIGNAL Reg_enables : STD_LOGIC_VECTOR (7 DOWNTO 0);
 
 BEGIN
 
-       Mux_8_to_1_0 : Mux_8_to_1
+       Decoder_3_to_8_0 : Decoder_3_to_8
        PORT MAP(
-              D(0) => R0(0),
-              D(1) => R1(0),
-              D(2) => R2(0),
-              D(3) => R3(0),
-              D(4) => R4(0),
-              D(5) => R5(0),
-              D(6) => R6(0),
-              D(7) => R7(0),
-              S => Reg_Sel,
-              Y => Output(0));
+              I => Reg_Sel,
+              Y => Reg_enables);
 
-       Mux_8_to_1_1 : Mux_8_to_1
+       Tri_State_4bit_0 : Tri_State_4bit
        PORT MAP(
-              D(0) => R0(1),
-              D(1) => R1(1),
-              D(2) => R2(1),
-              D(3) => R3(1),
-              D(4) => R4(1),
-              D(5) => R5(1),
-              D(6) => R6(1),
-              D(7) => R7(1),
-              S => Reg_Sel,
-              Y => Output(1));
+              I => R0,
+              En => Reg_enables(0),
+              O => Output);
 
-       Mux_8_to_1_2 : Mux_8_to_1
+       Tri_State_4bit_1 : Tri_State_4bit
        PORT MAP(
-              D(0) => R0(2),
-              D(1) => R1(2),
-              D(2) => R2(2),
-              D(3) => R3(2),
-              D(4) => R4(2),
-              D(5) => R5(2),
-              D(6) => R6(2),
-              D(7) => R7(2),
-              S => Reg_Sel,
-              Y => Output(2));
+              I => R1,
+              En => Reg_enables(1),
+              O => Output);
 
-       Mux_8_to_1_3 : Mux_8_to_1
+       Tri_State_4bit_2 : Tri_State_4bit
        PORT MAP(
-              D(0) => R0(3),
-              D(1) => R1(3),
-              D(2) => R2(3),
-              D(3) => R3(3),
-              D(4) => R4(3),
-              D(5) => R5(3),
-              D(6) => R6(3),
-              D(7) => R7(3),
-              S => Reg_Sel,
-              Y => Output(3));
+              I => R2,
+              En => Reg_enables(2),
+              O => Output);
+
+       Tri_State_4bit_3 : Tri_State_4bit
+       PORT MAP(
+              I => R3,
+              En => Reg_enables(3),
+              O => Output);
+
+       Tri_State_4bit_4 : Tri_State_4bit
+       PORT MAP(
+              I => R4,
+              En => Reg_enables(4),
+              O => Output);
+
+       Tri_State_4bit_5 : Tri_State_4bit
+       PORT MAP(
+              I => R5,
+              En => Reg_enables(5),
+              O => Output);
+
+       Tri_State_4bit_6 : Tri_State_4bit
+       PORT MAP(
+              I => R6,
+              En => Reg_enables(6),
+              O => Output);
+
+       Tri_State_4bit_7 : Tri_State_4bit
+       PORT MAP(
+              I => R7,
+              En => Reg_enables(7),
+              O => Output);
 
 END Behavioral;
