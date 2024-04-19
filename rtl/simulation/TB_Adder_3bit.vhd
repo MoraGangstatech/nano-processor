@@ -11,12 +11,13 @@ ARCHITECTURE Behavioral OF TB_Adder_3bit IS
         PORT (
             A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             B : IN STD_LOGIC;
-            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
+            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            Overflow : OUT STD_LOGIC
         );
     END COMPONENT;
 
     SIGNAL A : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL B : STD_LOGIC;
+    SIGNAL B, Overflow : STD_LOGIC;
     SIGNAL S : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
 BEGIN
@@ -25,7 +26,8 @@ BEGIN
     PORT MAP(
         A => A,
         B => B,
-        S => S
+        S => S,
+        Overflow => Overflow
     );
 
     PROCESS
