@@ -11,6 +11,7 @@ END LUT_7_Segment;
 ARCHITECTURE Behavioral OF LUT_7_Segment IS
 
     TYPE rom_type IS ARRAY (0 TO 15) OF STD_LOGIC_VECTOR(6 DOWNTO 0);
+    -- vhdl-linter-disable-next-line unused
     SIGNAL sevenSegment_ROM : rom_type := (
         "1000000", -- 0
         "1111001", -- 1

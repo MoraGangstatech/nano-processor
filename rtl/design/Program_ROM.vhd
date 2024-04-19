@@ -12,6 +12,7 @@ END Program_ROM;
 ARCHITECTURE Behavioral OF Program_ROM IS
 
       TYPE rom_type IS ARRAY (0 TO 7) OF STD_LOGIC_VECTOR(11 DOWNTO 0);
+      -- vhdl-linter-disable-next-line unused
       SIGNAL instruction_ROM : rom_type := (
 
             "101110000001", -- 0 -- MOVI R7,1
