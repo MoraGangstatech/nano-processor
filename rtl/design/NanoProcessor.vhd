@@ -52,7 +52,8 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         PORT (
             A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             B : IN STD_LOGIC;
-            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
+            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            C_out : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT Mux_8_4bit
