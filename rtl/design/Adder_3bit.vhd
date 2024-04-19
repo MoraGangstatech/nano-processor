@@ -5,7 +5,8 @@ ENTITY Adder_3bit IS
      PORT (
           A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
           B : IN STD_LOGIC;
-          S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
+          S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+          C_out : OUT STD_LOGIC);
 END Adder_3bit;
 
 ARCHITECTURE Behavioral OF Adder_3bit IS
@@ -17,7 +18,7 @@ ARCHITECTURE Behavioral OF Adder_3bit IS
                S : OUT STD_LOGIC;
                C : OUT STD_LOGIC);
      END COMPONENT;
-     SIGNAL HA0_C, HA1_C, C : STD_LOGIC;
+     SIGNAL HA0_C, HA1_C : STD_LOGIC;
 
 BEGIN
 
@@ -40,6 +41,6 @@ BEGIN
           A => A(2),
           B => HA1_C,
           S => S(2),
-          C => C);
+          C => C_out);
 
 END Behavioral;
