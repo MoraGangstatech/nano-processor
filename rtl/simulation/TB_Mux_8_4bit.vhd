@@ -1,3 +1,4 @@
+-- vhdl-linter-disable unused
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
@@ -36,7 +37,7 @@ ARCHITECTURE behavior OF TB_Mux_8_4bit IS
 BEGIN
 
     UUT : Mux_8_4bit
-    PORT MAP (
+    PORT MAP(
         Reg_Sel => Reg_Sel,
         R0 => R0,
         R1 => R1,
@@ -49,12 +50,13 @@ BEGIN
         Output => Output
     );
 
-PROCESS
---Index 220627B -- 11 0101 1101 1101 0011
---Index 220523D -- 11 0101 1101 0110 1011
---Index 220220V -- 11 0101 1100 0011 1100
---Index 220578A -- 11 0101 1101 1010 0010
+    PROCESS
+        --Index 220627B -- 11 0101 1101 1101 0011
+        --Index 220523D -- 11 0101 1101 0110 1011
+        --Index 220220V -- 11 0101 1100 0011 1100
+        --Index 220578A -- 11 0101 1101 1010 0010
     BEGIN
+
         R0 <= "0011";
         R1 <= "1101";
         R2 <= "0101";
@@ -63,39 +65,39 @@ PROCESS
         R5 <= "1100";
         R6 <= "0010";
         R7 <= "1010";
-        
+
         -- Test case 1: Select input R0
         Reg_Sel <= "000";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 2: Select input R1
         Reg_Sel <= "001";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 3: Select input R2
         Reg_Sel <= "010";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 4: Select input R3
         Reg_Sel <= "011";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 5: Select input R4
         Reg_Sel <= "100";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 6: Select input R5
         Reg_Sel <= "101";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 7: Select input R6
         Reg_Sel <= "110";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 8: Select input R7
         Reg_Sel <= "111";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
     END PROCESS;
 
 END;

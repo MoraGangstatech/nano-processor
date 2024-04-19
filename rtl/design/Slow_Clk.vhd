@@ -13,7 +13,10 @@ ARCHITECTURE Behavioral OF Slow_Clk IS
     SIGNAL Clk_status : STD_LOGIC := '0';
 
 BEGIN
-    PROCESS (Clk_in) BEGIN
+
+    PROCESS (Clk_in)
+    BEGIN
+
         IF (rising_edge(Clk_in)) THEN
             count <= count + 1;
             IF (count = 50000000) THEN
@@ -22,5 +25,7 @@ BEGIN
                 count <= 1;
             END IF;
         END IF;
+
     END PROCESS;
+
 END Behavioral;

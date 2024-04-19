@@ -1,3 +1,4 @@
+-- vhdl-linter-disable unused
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
@@ -24,31 +25,32 @@ ARCHITECTURE behavior OF TB_MUX_2_3bit IS
 BEGIN
 
     UUT : MUX_2_3bit
-    PORT MAP (
+    PORT MAP(
         A => A,
         B => B,
         S => S,
         Q => Q
     );
 
-PROCESS
+    PROCESS
     BEGIN
-    --Index 220578A -- 110 101 110 110 100 010
+
+        --Index 220578A -- 110 101 110 110 100 010
         -- Test case 1: Select A
         S <= '0';
         A <= "010";
         B <= "100";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 2: Select B
         S <= '1';
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
         -- Test case 3: Change inputs A and B
         A <= "110";
         B <= "101";
-        wait for 100 ns;
-        
+        WAIT FOR 100 ns;
+
     END PROCESS;
 
 END;

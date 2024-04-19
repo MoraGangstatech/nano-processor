@@ -1,4 +1,3 @@
-
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
@@ -44,13 +43,6 @@ BEGIN
       PORT MAP(
             I => Reg_en,
             Y => enable);
-      -- hardcode R0 to 0
-      --Reg_0 : Reg
-      --port map( D => "0000",
-      --          En => enable(0),
-      --          Q => out0,
-      --          Res =>res,
-      --          Clk => clk);
       out0 <= "0000";
 
       Reg_1 : Reg

@@ -19,6 +19,7 @@ ARCHITECTURE Behavioral OF Mux_8_to_1 IS
     SIGNAL temp1, temp2 : STD_LOGIC_VECTOR (7 DOWNTO 0);
 
 BEGIN
+
     Decoder_3_to_8_1 : Decoder_3_to_8
     PORT MAP(
         I => S,

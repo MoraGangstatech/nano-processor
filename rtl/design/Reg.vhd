@@ -16,6 +16,7 @@ BEGIN
 
     PROCESS (Clk, EN, RES)
     BEGIN
+
         IF (Res = '0') THEN
             IF (rising_edge(Clk)) THEN
                 IF (EN = '1') THEN
@@ -25,6 +26,7 @@ BEGIN
         ELSE
             Q <= "0000";
         END IF;
+
     END PROCESS;
 
 END Behavioral;

@@ -1,81 +1,56 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 04/10/2024 08:36:57 PM
--- Design Name: 
--- Module Name: TB_NP - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+-- vhdl-linter-disable unused
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
+ENTITY TB_NanoProcessor IS
+    --  Port ( );
+END TB_NanoProcessor;
 
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+ARCHITECTURE Behavioral OF TB_NanoProcessor IS
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+    COMPONENT NanoProcessor
+        PORT (
+            Clk : IN STD_LOGIC;
+            Reset : IN STD_LOGIC;
+            Zero : OUT STD_LOGIC;
+            Overflow : OUT STD_LOGIC;
+            Seven_Seg_Out : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
+            LED_Out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Anode : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
+    END COMPONENT;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+    SIGNAL Seven_Seg_Out : STD_LOGIC_VECTOR (6 DOWNTO 0);
+    SIGNAL Reset, Zero, Overflow : STD_LOGIC;
+    SIGNAL Clk : STD_LOGIC := '0';
+    SIGNAL LED_Out : STD_LOGIC_VECTOR (3 DOWNTO 0);
 
-entity TB_NanoProcessor is
---  Port ( );
-end TB_NanoProcessor;
+BEGIN
 
-architecture Behavioral of TB_NanoProcessor is
+    UUT : NanoProcessor PORT MAP(
+        Clk => Clk,
+        Reset => Reset,
+        Zero => Zero,
+        Overflow => Overflow,
+        Seven_Seg_Out => Seven_Seg_Out,
+        LED_Out => LED_Out
+    );
 
-component NanoProcessor
-    Port (
-       Clk : IN STD_LOGIC;
-       Reset : IN STD_LOGIC;
-       Zero : OUT STD_LOGIC;
-       Overflow : OUT STD_LOGIC;
-       Seven_Seg_Out : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
-       LED_Out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-       Anode: out STD_LOGIC_VECTOR(3 downto 0));
-end component;
+    PROCESS
+    BEGIN
 
-signal Seven_Seg_Out :STD_LOGIC_VECTOR (6 downto 0);
-signal Reset, Zero, Overflow : STD_LOGIC;
-signal Clk : STD_LOGIC := '0';
-signal LED_Out : STD_LOGIC_VECTOR (3 DOWNTO 0);
+        Clk <= NOT Clk;
+        WAIT FOR 50 ns; -- Assuming a 50 ns clock period
 
-begin
+    END PROCESS;
 
-UUT: NanoProcessor PORT MAP(
-    Clk => Clk,
-    Reset => Reset,
-    Zero => Zero,
-    Overflow => Overflow,
-    Seven_Seg_Out => Seven_Seg_Out,
-    LED_Out => LED_Out
-);
-    process
-    begin
-        Clk <= not Clk;
-        wait for 50 ns; -- Assuming a 50 ns clock period
-    end process;
+    PROCESS
+    BEGIN
 
-    process
-    begin
-      Reset <= '1';
-      wait for 10 ns; -- Assuming a 10 ns reset duration
-      Reset <= '0';
-      wait;
-      
-    end process;
+        Reset <= '1';
+        WAIT FOR 10 ns; -- Assuming a 10 ns reset duration
+        Reset <= '0';
+        WAIT;
 
-end Behavioral;
+    END PROCESS;
+
+END Behavioral;

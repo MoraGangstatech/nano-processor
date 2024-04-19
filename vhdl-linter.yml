@@ -1,0 +1,21 @@
+rules:
+  coding-style: true
+  consistent-casing: false
+  component: true
+  instantiation: true
+  configuration: true
+  multiple-definition: true
+  not-declared: true
+  naming-style: true
+  casing-style: true
+  type-checking: true
+  type-resolved: false
+  unused: true
+  use-clause: true
+  empty: true
+  constant-write: true
+  parser: true
+  unit: true
+  not-allowed: true
+  order: true
+  attribute: true

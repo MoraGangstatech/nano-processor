@@ -1,22 +1,26 @@
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 
-entity Tri_State_3bit is
-    port (
-        En : in std_logic;
-        I : in STD_LOGIC_VECTOR (2 downto 0);
-        O : out STD_LOGIC_VECTOR (2 downto 0)
+ENTITY Tri_State_3bit IS
+    PORT (
+        En : IN STD_LOGIC;
+        I : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+        O : OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
     );
-end entity Tri_State_3bit;
+END ENTITY Tri_State_3bit;
 
-architecture Behavioral of Tri_State_3bit is
-begin
-    process (En,I)
-    begin
-        if En = '1' then
+ARCHITECTURE Behavioral OF Tri_State_3bit IS
+BEGIN
+
+    PROCESS (En, I)
+    BEGIN
+
+        IF En = '1' THEN
             O <= I;
-        else
-            O <= "ZZZ";  -- High impedance state
-        end if;
-    end process;
-end architecture Behavioral;
+        ELSE
+            O <= "ZZZ"; -- High impedance state
+        END IF;
+
+    END PROCESS;
+
+END ARCHITECTURE Behavioral;
