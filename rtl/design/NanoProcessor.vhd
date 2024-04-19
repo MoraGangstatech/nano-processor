@@ -14,6 +14,12 @@ END NanoProcessor;
 
 ARCHITECTURE Behavioral OF NanoProcessor IS
 
+    COMPONENT Slow_Clk
+        PORT (
+            Clk_in : IN STD_LOGIC;
+            Clk_out : OUT STD_LOGIC);
+    END COMPONENT;
+
     COMPONENT Instruction_Decoder
         PORT (
             Instruction : IN STD_LOGIC_VECTOR (11 DOWNTO 0);
@@ -69,7 +75,6 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             B : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             M : IN STD_LOGIC;--IF M=0 => Addition; IF M=1 => Subtraction;
             S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-            C_out : OUT STD_LOGIC;
             Zero : OUT STD_LOGIC;
             Overflow : OUT STD_LOGIC);
     END COMPONENT;
@@ -117,9 +122,14 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     SIGNAL Value, Load_Mux_Out, Mux_0_Out, Mux_1_Out, Adder_Sub_Out : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL R0, R1, R2, R3, R4, R5, R6, R7 : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL Instruction : STD_LOGIC_VECTOR (11 DOWNTO 0);
-    SIGNAL Jump_Reg, Load_Sel, Add_Sub, Jump_Flag, Zero_Flag : STD_LOGIC;
+    SIGNAL Jump_Reg, Load_Sel, Add_Sub, Jump_Flag, Zero_Flag, Slow_Clk_Out : STD_LOGIC;
 
 BEGIN
+
+    Slow_Clock : Slow_Clk
+    PORT MAP(
+        Clk_in => Clk,
+        Clk_out => Slow_Clk_Out);
 
     Adder_PC : Adder_3bit
     PORT MAP(
@@ -154,7 +164,7 @@ BEGIN
 
     Register_Bank : Reg_bank
     PORT MAP(
-        clk => Clk,
+        clk => Slow_Clk_Out,
         Reg_en => Reg_En,
         data => Load_Mux_Out,
         res => Reset,
@@ -217,7 +227,7 @@ BEGIN
     Program_C : PC
     PORT MAP(
         Reset => Reset,
-        Clk => Clk,
+        Clk => Slow_Clk_Out,
         Memory_select => Memory_select,
         D => PC_Mux_Out);
 
