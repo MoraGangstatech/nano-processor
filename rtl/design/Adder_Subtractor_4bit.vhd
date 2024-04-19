@@ -7,7 +7,6 @@ ENTITY Adder_Subtractor_4bit IS
         B : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
         M : IN STD_LOGIC; -- 1 - sub
         S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-        C_out : OUT STD_LOGIC;
         Zero : OUT STD_LOGIC;
         Overflow : OUT STD_LOGIC);
 END Adder_Subtractor_4bit;
@@ -65,11 +64,10 @@ BEGIN
     B2 <= B(2) XOR M;
     B3 <= B(3) XOR M;
 
-    C_out <= FA3_C;
     S <= S_out;
 
     Zero <= NOT (S_out(0) OR S_out(1) OR S_out(2) OR S_out(3));
 
-    Overflow <= FA3_C XOR FA2_C;
+    Overflow <= FA3_C;
 
 END Behavioral;
