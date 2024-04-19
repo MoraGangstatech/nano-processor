@@ -63,6 +63,6 @@ BEGIN
 
         WAIT;
 
-    END PROCESS Stimulus;
+    END PROCESS;
     
 END Behavioral;
