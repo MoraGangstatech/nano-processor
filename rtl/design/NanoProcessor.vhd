@@ -130,7 +130,7 @@ BEGIN
     PORT MAP(
         Clk_in => Clk,
         Clk_out => Slow_Clk_Out);
-        
+
     Adder_PC : Adder_3bit
     PORT MAP(
         A => Memory_select,

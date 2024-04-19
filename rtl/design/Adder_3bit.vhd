@@ -11,14 +11,12 @@ END Adder_3bit;
 ARCHITECTURE Behavioral OF Adder_3bit IS
 
      COMPONENT HA
-        PORT (
-            A : IN STD_LOGIC;
-            B : IN STD_LOGIC;
-            S : OUT STD_LOGIC;
-            C : OUT STD_LOGIC);
+          PORT (
+               A : IN STD_LOGIC;
+               B : IN STD_LOGIC;
+               S : OUT STD_LOGIC;
+               C : OUT STD_LOGIC);
      END COMPONENT;
-
-
      SIGNAL HA0_C, HA1_C, C : STD_LOGIC;
 
 BEGIN
