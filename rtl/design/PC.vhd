@@ -16,12 +16,12 @@ BEGIN
   PROCESS (Clk)
   BEGIN
 
-    IF (rising_edge(Clk)) THEN
-      IF (Reset = '1') THEN
-        Memory_select <= "000";
-      ELSE
+    IF (Reset = '0') THEN
+      IF (rising_edge(Clk)) THEN
         Memory_select <= D;
       END IF;
+    ELSE
+      Memory_select <= "000";
     END IF;
 
   END PROCESS;
