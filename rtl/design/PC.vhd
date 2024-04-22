@@ -25,9 +25,7 @@ BEGIN
     -- END IF;
     IF (Res = '0') THEN
       IF (rising_edge(Clk)) THEN
-        IF (EN = '1') THEN
-          Memory_select <= D;
-        END IF;
+        Memory_select <= D;
       END IF;
     ELSE
       Q <= "000";
