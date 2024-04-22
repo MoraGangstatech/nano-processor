@@ -23,12 +23,12 @@ BEGIN
     --     Memory_select <= D;
     --   END IF;
     -- END IF;
-    IF (Res = '0') THEN
+    IF (Reset = '0') THEN
       IF (rising_edge(Clk)) THEN
         Memory_select <= D;
       END IF;
     ELSE
-      Q <= "000";
+      Memory_select <= "000";
     END IF;
   END PROCESS;
 
