@@ -16,20 +16,22 @@ BEGIN
   PROCESS (Clk)
   BEGIN
 
-    IF (rising_edge(Clk)) THEN
-      IF (Reset = '1') THEN
-        Memory_select <= "000";
-      ELSE
-        Memory_select <= D;
+    -- IF (rising_edge(Clk)) THEN
+    --   IF (Reset = '1') THEN
+    --     Memory_select <= "000";
+    --   ELSE
+    --     Memory_select <= D;
+    --   END IF;
+    -- END IF;
+    IF (Res = '0') THEN
+      IF (rising_edge(Clk)) THEN
+        IF (EN = '1') THEN
+          Memory_select <= D;
+        END IF;
       END IF;
+    ELSE
+      Q <= "000";
     END IF;
-  --   IF (Reset = '0') THEN
-  --     IF (rising_edge(Clk)) THEN
-  --         Memory_select <= D;
-  --     END IF;
-  --   ELSE
-  --     Memory_select <= "000";
-  --   END IF;
-  -- END PROCESS;
+  END PROCESS;
 
 END Behavioral;
