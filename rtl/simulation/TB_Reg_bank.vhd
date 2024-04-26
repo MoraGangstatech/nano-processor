@@ -20,7 +20,8 @@ ARCHITECTURE Behavioral OF TB_Reg_bank IS
             out4 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out5 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out6 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-            out7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0)
+            out7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Bank_en : IN STD_LOGIC
         );
     END COMPONENT;
 
@@ -28,6 +29,7 @@ ARCHITECTURE Behavioral OF TB_Reg_bank IS
     SIGNAL Reg_en : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL data_in : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL res : STD_LOGIC := '0';
+    SIGNAL Bank_en : STD_LOGIC := '0';
     SIGNAL out0, out1, out2, out3, out4, out5, out6, out7 : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
 BEGIN
@@ -46,7 +48,8 @@ BEGIN
         out4 => out4,
         out5 => out5,
         out6 => out6,
-        out7 => out7
+        out7 => out7,
+        Bank_en => Bank_en
     );
 
     -- Clock process
