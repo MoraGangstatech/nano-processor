@@ -14,7 +14,9 @@ ARCHITECTURE Behavioral OF TB_Adder_Subtractor_4bit IS
             M : IN STD_LOGIC; -- 1 for subtraction, 0 for addition
             S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             Zero : OUT STD_LOGIC;
-            Overflow : OUT STD_LOGIC
+            Overflow : OUT STD_LOGIC;
+            Sign : OUT STD_LOGIC;
+            Carry : OUT STD_LOGIC
         );
     END COMPONENT;
 
