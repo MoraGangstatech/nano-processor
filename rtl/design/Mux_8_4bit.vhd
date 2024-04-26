@@ -20,7 +20,8 @@ ARCHITECTURE Behavioral OF Mux_8_4bit IS
        COMPONENT Decoder_3_to_8
               PORT (
                      I : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-                     Y : OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
+                     Y : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                     Enable : IN STD_LOGIC);
        END COMPONENT;
 
        COMPONENT Tri_State_4bit
@@ -37,7 +38,8 @@ BEGIN
        Decoder_3_to_8_0 : Decoder_3_to_8
        PORT MAP(
               I => Reg_Sel,
-              Y => Reg_enables);
+              Y => Reg_enables,
+              Enable => '1');
 
        Tri_State_4bit_0 : Tri_State_4bit
        PORT MAP(

@@ -5,10 +5,12 @@ ENTITY Adder_Subtractor_4bit IS
     PORT (
         A : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
         B : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
-        M : IN STD_LOGIC; -- 1 - sub
+        M : IN STD_LOGIC;
         S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
         Zero : OUT STD_LOGIC;
-        Overflow : OUT STD_LOGIC);
+        Overflow : OUT STD_LOGIC;
+        Carry : OUT STD_LOGIC;
+        Sign : OUT STD_LOGIC);
 END Adder_Subtractor_4bit;
 
 ARCHITECTURE Behavioral OF Adder_Subtractor_4bit IS
@@ -56,7 +58,8 @@ BEGIN
         A => A(3),
         B => B3,
         C_in => FA2_C,
-        S => S_out(3));
+        S => S_out(3),
+        C_out => Carry);
 
     B0 <= B(0) XOR M;
     B1 <= B(1) XOR M;
@@ -68,5 +71,7 @@ BEGIN
     Zero <= NOT (S_out(0) OR S_out(1) OR S_out(2) OR S_out(3));
 
     Overflow <= (B3 AND A(3) AND NOT FA2_C) OR (NOT B3 AND NOT A(3) AND FA2_C);
+
+    Sign <= S_out(3);
 
 END Behavioral;
