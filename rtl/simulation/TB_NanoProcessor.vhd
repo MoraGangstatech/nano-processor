@@ -39,7 +39,7 @@ BEGIN
     BEGIN
 
         Clk <= NOT Clk;
-        WAIT FOR 50 ns; -- Assuming a 50 ns clock period
+        WAIT FOR 5 ns; -- Assuming a 5 ns clock period
 
     END PROCESS;
 
@@ -47,7 +47,7 @@ BEGIN
     BEGIN
 
         Reset <= '1';
-        WAIT FOR 10 ns; -- Assuming a 10 ns reset duration
+        WAIT FOR 70 ns; -- Assuming a 70 ns reset duration
         Reset <= '0';
         WAIT;
 
