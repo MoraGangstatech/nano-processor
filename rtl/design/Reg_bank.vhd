@@ -1,10 +1,10 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY Reg_bank IS
+ENTITY Reg_Bank IS
       PORT (
-            clk : IN STD_LOGIC;
-            Reg_en : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            Clk : IN STD_LOGIC;
+            Reg_En : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             data : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             res : IN STD_LOGIC;
             out0 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -14,17 +14,19 @@ ENTITY Reg_bank IS
             out4 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out5 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out6 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-            out7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
-END Reg_bank;
+            out7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Bank_En : IN STD_LOGIC);
+END Reg_Bank;
 
-ARCHITECTURE Behavioral OF Reg_bank IS
+ARCHITECTURE Behavioral OF Reg_Bank IS
 
       SIGNAL enable : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
       COMPONENT Decoder_3_to_8
             PORT (
-                  I : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-                  Y : OUT STD_LOGIC_VECTOR(7 DOWNTO 0));
+                  I : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+                  Y : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                  Enable : IN STD_LOGIC);
       END COMPONENT;
 
       COMPONENT Reg
@@ -34,7 +36,6 @@ ARCHITECTURE Behavioral OF Reg_bank IS
                   Q : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                   Res : IN STD_LOGIC;
                   Clk : IN STD_LOGIC);
-
       END COMPONENT;
 
 BEGIN
@@ -42,7 +43,8 @@ BEGIN
       Decoder_3_to_8_reg : Decoder_3_to_8
       PORT MAP(
             I => Reg_en,
-            Y => enable);
+            Y => enable,
+            Enable => Bank_En);
       out0 <= "0000";
 
       Reg_1 : Reg

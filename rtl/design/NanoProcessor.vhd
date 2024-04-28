@@ -22,37 +22,39 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
 
     COMPONENT Instruction_Decoder
         PORT (
-            Instruction : IN STD_LOGIC_VECTOR (11 DOWNTO 0);
-            Jump_Reg : IN STD_LOGIC;
-            Reg_En : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
-            Reg_Sel_0 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
-            Value : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-            Load_Sel : OUT STD_LOGIC;
-            Reg_Sel_1 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
-            Add_Sub : OUT STD_LOGIC;
+            Instruction : IN STD_LOGIC_VECTOR (13 DOWNTO 0);
+            ALU_A : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            ALU_B : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            Im_Val : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             Jump_Flag : OUT STD_LOGIC;
-            Jump_Addr : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
+            Jump_Addr : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            ALU_Control : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            Reg_En : OUT STD_LOGIC;
+            Reg_Addr : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            Zero_Flag : IN STD_LOGIC;
+            Sign_Flag : IN STD_LOGIC;
+            Load_Sel : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT PC
         PORT (
             Reset : IN STD_LOGIC;
             Clk : IN STD_LOGIC;
-            D : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            Memory_select : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
+            D : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Memory_select : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
     END COMPONENT;
 
     COMPONENT Program_ROM
         PORT (
-            MemoryAddress : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            Instruction : OUT STD_LOGIC_VECTOR (11 DOWNTO 0));
+            MemoryAddress : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Instruction : OUT STD_LOGIC_VECTOR (13 DOWNTO 0));
     END COMPONENT;
 
-    COMPONENT Adder_3bit
+    COMPONENT Adder_4bit
         PORT (
-            A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            A : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             B : IN STD_LOGIC;
-            S : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             C_out : OUT STD_LOGIC);
     END COMPONENT;
 
@@ -70,22 +72,16 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             Output : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
     END COMPONENT;
 
-    COMPONENT Adder_Subtractor_4bit
+    COMPONENT ALU
         PORT (
+            Control : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             A : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             B : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
-            M : IN STD_LOGIC;--IF M=0 => Addition; IF M=1 => Subtraction;
             S : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             Zero : OUT STD_LOGIC;
-            Overflow : OUT STD_LOGIC);
-    END COMPONENT;
-
-    COMPONENT MUX_2_3bit
-        PORT (
-            A : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            B : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            S : IN STD_LOGIC;
-            Q : OUT STD_LOGIC_VECTOR (2 DOWNTO 0));
+            Overflow : OUT STD_LOGIC;
+            Carry : OUT STD_LOGIC;
+            Sign : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT MUX_2_4bit
@@ -109,6 +105,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             out4 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out5 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             out6 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Bank_En : IN STD_LOGIC;
             out7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
     END COMPONENT;
 
@@ -118,12 +115,13 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             data : OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
     END COMPONENT;
 
-    SIGNAL PC_Mux_Out, Memory_select, PC_Adder_Out, Jump_Addr : STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL PC_Mux_Out, Memory_select, PC_Adder_Out, Jump_Addr : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL Reg_En, Reg_Sel_0, Reg_Sel_1 : STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL ACL_CTRL : STD_LOGIC_VECTOR (2 DOWNTO 0);
     SIGNAL Value, Load_Mux_Out, Mux_0_Out, Mux_1_Out, Adder_Sub_Out : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL R0, R1, R2, R3, R4, R5, R6, R7 : STD_LOGIC_VECTOR (3 DOWNTO 0);
-    SIGNAL Instruction : STD_LOGIC_VECTOR (11 DOWNTO 0);
-    SIGNAL Jump_Reg, Load_Sel, Add_Sub, Jump_Flag, Zero_Flag, Slow_Clk_Out : STD_LOGIC;
+    SIGNAL Instruction : STD_LOGIC_VECTOR (13 DOWNTO 0);
+    SIGNAL Load_Sel, Sign_Flag, Jump_Flag, Zero_Flag, Slow_Clk_Out, Bank_En : STD_LOGIC;
 
 BEGIN
 
@@ -132,13 +130,13 @@ BEGIN
         Clk_in => Clk,
         Clk_out => Slow_Clk_Out);
 
-    Adder_PC : Adder_3bit
+    Adder_PC : Adder_4bit
     PORT MAP(
         A => Memory_select,
         B => '1',
         S => PC_Adder_Out);
 
-    PC_Mux : MUX_2_3bit
+    PC_Mux : MUX_2_4bit
     PORT MAP(
         A => Jump_Addr,
         B => PC_Adder_Out,
@@ -153,15 +151,17 @@ BEGIN
     ID : Instruction_Decoder
     PORT MAP(
         Instruction => Instruction,
-        Jump_Reg => Zero_Flag,
-        Reg_En => Reg_En,
-        Reg_Sel_0 => Reg_Sel_0,
-        Value => Value,
+        Zero_Flag => Zero_Flag,
+        Reg_En => Bank_En,
+        Reg_Addr => Reg_En,
+        ALU_A => Reg_Sel_0,
+        Im_Val => Value,
         Load_Sel => Load_Sel,
-        Reg_Sel_1 => Reg_Sel_1,
-        Add_Sub => Add_Sub,
+        ALU_B => Reg_Sel_1,
+        ALU_Control => ACL_CTRL,
         Jump_Flag => Jump_Flag,
-        Jump_Addr => Jump_Addr);
+        Jump_Addr => Jump_Addr,
+        Sign_Flag => Sign_Flag);
 
     Register_Bank : Reg_bank
     PORT MAP(
@@ -176,7 +176,8 @@ BEGIN
         out4 => R4,
         out5 => R5,
         out6 => R6,
-        out7 => R7);
+        out7 => R7,
+        Bank_En => Bank_En);
 
     Mux_0 : Mux_8_4bit
     PORT MAP(
@@ -204,14 +205,15 @@ BEGIN
         R7 => R7,
         Output => Mux_1_Out);
 
-    Adder_Sub : Adder_Subtractor_4bit
+    Adder_Sub : ALU
     PORT MAP(
-        A => Mux_1_Out,
-        B => Mux_0_Out, -- for NEG command
-        M => Add_Sub, --IF M=0 => Addition; IF M=1 => Subtraction;
+        A => Mux_0_Out,
+        B => Mux_1_Out, -- for NEG command
+        Control => ACL_CTRL, --IF M=0 => Addition; IF M=1 => Subtraction;
         S => Adder_Sub_Out,
         Overflow => Overflow,
-        Zero => Zero_Flag);
+        Zero => Zero_Flag,
+        Sign => Sign_Flag);
 
     Load_Mux : MUX_2_4bit
     PORT MAP(
